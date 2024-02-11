@@ -13,9 +13,9 @@ def hangman ():
     used_letters = set()
     print(word)
     # start the game
-    while lives > 0:
+    while lives > 0 and len(word_letters) > 0:
         print("Welcome to Hangman! \n")
-        print(f"You have {lives} remaining \n ")
+        print(f"You have {lives} lives remaining \n ")
         print(f"You have used {used_letters} in your guess")
 
         # if the user has guessed the letters b,l,h
@@ -56,7 +56,12 @@ def hangman ():
         # User inputted a letter, checks if user letter is actually a letter in (use alphabet)
         # Makes sure it isnt already used_letters
 
+    if lives == 0:
+        print(f"Game Over!, You died. The word was: {word}")
+    else:
+        print("Congradulations, You won!")
 
 
+# boiler plate code, if you wanna call hangman in other files
 if __name__ == "__main__":
     hangman()
