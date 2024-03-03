@@ -21,9 +21,32 @@ if "word_letters" not in st.session_state:
 # our word is now know as st.session_state.word for context
     
 # starts off as a empty set
-    
+st.write(st.session_state.word)
 #front end stuff
 alphabet = set(string.ascii_uppercase)
+
+# actual game logic 
+def guess_letter_logic():
+    if user_letter in st.session_state.used_letters:
+        st.error("You have already used this letter. Guess again")
+    elif user_letter in alphabet:
+        st.session_state.used_letters.add(user_letter)
+        if user_letter in st.session_state.word_letters:
+            st.session_state.word_letters.remove(user_letter)
+            if len(st.session_state.word_letters) == 0:
+                st.success("Congrats, you won!")
+        else:
+            st.session_state.lives -= 1
+            if st.session_state.lives == 0:
+                st.error(f"Game over. You died :( the word was {st.session_state.word}")
+            else:
+                st.error(f"This letter {user_letter} is not in the word")
+    else:
+        st.error("That is not a valid letter/character")
+
+
+
+
 #state variables is for variables that change across runs
 # Display lives and used letters at the top
 st.title("Welcome to hangman")
@@ -42,7 +65,8 @@ st.write ("".join(word_list))
 #now user guesses letter
 
 user_letter = st.text_input("Guess a letter: " ,key="user_letter")
-
+user_letter = user_letter.upper()
 #add a button to submit 
 
-st.button("Submit")
+st.button("Submit", on_click=guess_letter_logic)
+
