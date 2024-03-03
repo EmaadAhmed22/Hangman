@@ -27,16 +27,22 @@ alphabet = set(string.ascii_uppercase)
 #state variables is for variables that change across runs
 # Display lives and used letters at the top
 st.title("Welcome to hangman")
-st.write(f"You have {st.session_state.lives} remaining \n")
-st.write(f"You have used the following letters: {st.session_state.used_letters} in your guess")
-st.write(f"You chose {st.session_state.word}")
+st.write(f"You have {st.session_state.lives} lives remaining \n")
+if len(st.session_state.used_letters) > 0:
+    st.write(f"You have used the following letters: {st.session_state.used_letters} in your guess")
+
+#st.write(f"You chose {st.session_state.word}")
 
 
 #display the current STATE of the word 
 word_list = [letter if letter in st.session_state.used_letters else "-" for letter in st.session_state.word]
 
-st.write(word_list)
+st.write ("".join(word_list))
 #re run refreshes code 
 #now user guesses letter
 
-user_letter = st.text_input("Guess a letter: " ,keys="user_letter")
+user_letter = st.text_input("Guess a letter: " ,key="user_letter")
+
+#add a button to submit 
+
+st.button("Submit")
